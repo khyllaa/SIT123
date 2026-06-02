@@ -1,24 +1,24 @@
 <section id="login" class="page">
     <div class="login-card">
-        <span class="back-btn" onclick="showPage('home')"><i class="fas fa-chevron-left"></i> BACK</span>
-        <h2>LOGIN</h2>
+        <span class="back-btn" onclick="showPage('home')"><i class="fas fa-chevron-left"></i> KEMBALI</span>
+        <h2>Selamat Datang</h2>
+        <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Masuk dengan akun Gmail Anda</p>
         
         <div class="input-group">
-            <i class="fas fa-user icon-input"></i>
-            <input type="email" id="emailInput" placeholder="ENTER EMAIL">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="emailInput" placeholder="Email (contoh: user@gmail.com)">
         </div>
         <div class="input-group">
-            <i class="fas fa-eye-slash icon-input"></i>
-            <input type="password" id="passInput" placeholder="PASSWORD">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="passInput" placeholder="Password (min. 4 karakter)">
         </div>
         
-        <button class="btn-blue-submit full-width" onclick="validateGmail()">LOGIN</button>
+        <button class="btn-pink full-width" onclick="validateGmail()">MASUK</button>
         
-        <div class="divider"><span>Sign in with</span></div>
+        <div class="divider"><span>Atau masuk dengan</span></div>
         <div class="social-icons">
-            <button class="social-btn facebook" onclick="alert('Login Facebook Berhasil')"><i class="fab fa-facebook-f"></i></button>
-            <button class="social-btn google" onclick="alert('Login Google Berhasil')"><i class="fab fa-google"></i></button>
-            <button class="social-btn apple" onclick="alert('Login Apple Berhasil')"><i class="fab fa-apple"></i></button>
+            <button class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google"></button>
+            <button class="social-btn"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="FB"></button>
         </div>
     </div>
 </section>
