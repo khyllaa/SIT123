@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SurveyIN - Jasa Survei Kos Tanpa Ribet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo" onclick="showPage('home')">Survey<span>IN</span></div>
+    <ul id="navLinks">
+        <li class="nav-item active-nav" onclick="showPage('home')">HOME</li>
+        <li class="nav-item" onclick="showPage('about')">ABOUT</li>
+        <li class="nav-item" onclick="showPage('search')">SURVEYOR</li>
+    </ul>
+    <div class="nav-auth">
+        <button id="navLoginBtn" class="btn-outline" onclick="showPage('login')">LOGIN</button>
+    </div>
+</nav>
+
+<section id="home" class="page active">
+    <div class="hero">
+        <div class="hero-text">
+            <p class="brand-sub">#1 Trusted Survey Service</p>
+            <h1>Mau cek kos tanpa ribet? <br><span class="text-pink">SurveyIN</span> aja!</h1>
+            <p>Ayo kunjungi laman ini! Hemat waktu dan tenaga. Biar surveyor profesional kami yang memastikan calon hunianmu aman dan nyaman sebelum kamu membayar.</p><br>
+            <button class="btn-pink" onclick="showPage('login')">START HERE! <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <div class="hero-image">
+            <div class="logo-circle">
+                <span class="logo-circle-text">survey<span>IN</span></span>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-banner">
+        <h2>GAMBAR</h2>
+    </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
