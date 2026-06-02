@@ -1,0 +1,103 @@
+<section id="profile" class="page">
+    <div class="tabs-profile">
+        <div class="tab-item active-tab" onclick="switchProfileSubPage('profile-main')">PROFILE</div>
+        <div class="tab-item" onclick="switchProfileSubPage('profile-portofolio')">PORTOFOLIO</div>
+        <div class="tab-item" onclick="switchProfileSubPage('profile-ulasan')">ULASAN</div>
+    </div>
+
+    <div id="profile-main" class="profile-sub-page active-sub">
+        <div class="profile-center-card">
+            <div class="big-avatar-box">
+                <img id="p-img" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80" alt="Profile">
+            </div>
+            <h2 id="p-nama-top" class="text-blue-heavy mt-2">NAMA</h2>
+        </div>
+        <hr class="divider-line">
+        <div class="profile-details-list">
+            <h2 class="title-details text-center">PROFILE</h2>
+            <div class="info-item">NAMA: <span id="p-nama">Rizky Pratama</span></div>
+            <div class="info-item">USIA: <span id="p-usia">24 Tahun</span></div>
+            <div class="info-item">JENIS KELAMIN: <span id="p-jk">Laki-laki</span></div>
+            <div class="info-item">JANGKAUAN AREA KOS: <span id="p-area">Jakarta Selatan</span></div>
+            <div class="info-item">RATING: <span id="p-rating" class="stars">★★★★★</span></div>
+        </div>
+        <button class="contact-floating-btn" onclick="alert('Menghubungi surveyor via Whatsapp...')">
+            <i class="far fa-comment-dots"></i> Contact me
+        </button>
+    </div>
+
+    <div id="profile-portofolio" class="profile-sub-page">
+        <div class="container">
+            <h2 class="title-blue mb-4">Portofolio</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item"><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=300&q=80" alt="Kos 1"></div>
+                <div class="portfolio-item"><img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=300&q=80" alt="Kos 2"></div>
+                <div class="portfolio-item"><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=300&q=80" alt="Kos 3"></div>
+                <div class="portfolio-item"><img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=300&q=80" alt="Kos 4"></div>
+                <div class="portfolio-item"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=300&q=80" alt="Kos 5"></div>
+                <div class="portfolio-item"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=300&q=80" alt="Kos 6"></div>
+                <div class="portfolio-item"><img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=300&q=80" alt="Kos 7"></div>
+                <div class="portfolio-item"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=300&q=80" alt="Kos 8"></div>
+                <div class="portfolio-item"><img src="https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&w=300&q=80" alt="Kos 9"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="profile-ulasan" class="profile-sub-page">
+        <div class="container">
+            <h2 class="title-blue mb-4">ULASAN</h2>
+            
+            <div class="review-box-custom clickable-add" onclick="checkReviewAccess()">
+                <h3>Beri rating dan ulasan</h3>
+                <div class="stars-input-placeholder">
+                    <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                </div>
+                <p>Tambahkan foto & komentar dari pelayanan terakhir</p>
+            </div>
+
+            <div id="reviewForm" class="review-input-box" style="display:none;">
+                <h4>Tulis Ulasan Anda</h4>
+                <div class="star-rating-input">
+                    <i class="fas fa-star" data-value="1"></i>
+                    <i class="fas fa-star" data-value="2"></i>
+                    <i class="fas fa-star" data-value="3"></i>
+                    <i class="fas fa-star" data-value="4"></i>
+                    <i class="fas fa-star" data-value="5"></i>
+                    <span id="ratingStatus">Pilih Rating</span>
+                </div>
+                <textarea id="revText" rows="3" placeholder="Ceritakan pengalamanmu..."></textarea>
+                <button class="btn-pink-sm" onclick="submitReview()">Kirim Ulasan</button>
+            </div>
+
+            <div id="reviewList">
+                <div class="review-box-custom">
+                    <div class="rev-header">
+                        <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+                        <div>
+                            <h4>nama akun</h4>
+                            <small>tanggal mengulas</small>
+                        </div>
+                    </div>
+                    <div class="stars mb-1">★★★★★ <span style="color:#aaa;">(4.5)</span></div>
+                    <p>Wah pelayannya ramah sekali, sangat bagus, semoga tetap ramah selalu</p>
+                </div>
+
+                <div class="review-box-custom">
+                    <div class="rev-header">
+                        <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+                        <div>
+                            <h4>nama akun</h4>
+                            <small>tanggal mengulas</small>
+                        </div>
+                    </div>
+                    <div class="stars mb-1">★★★☆☆</div>
+                    <p>Jasanya kurang responsif, perlu ditingkatkan lain kali.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wave-footer">
+        <div class="logo-footer">Survey<span>IN</span></div>
+    </div>
+</section>
