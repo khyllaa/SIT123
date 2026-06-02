@@ -1,17 +1,18 @@
 let isLogged = false;
 let userEmail = "";
-let currentRating = 0;
+let currentRating = 0; // Menyimpan pilihan rating bintang
 
 window.onload = () => {
-    initStarRating();  
+    loadReviews();     // Muat ulasan dari LocalStorage
+    initStarRating();  // Aktifkan sistem klik bintang
 };
 
-// --- NAVIGATION UTAMAA ---
+// --- NAVIGATION LOGIC ---
 function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     
-    // Kelola status Navigasi Atas
+    // Update active state di Navbar
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
         item.classList.remove('active-nav');
@@ -22,49 +23,7 @@ function showPage(id) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// --- SUB-PAGES UNTUK MENU PROFIL (TAB SYSTEM) ---
-function switchProfileSubPage(subId) {
-    // Sembunyikan semua sub halaman profil
-    document.querySelectorAll('.profile-sub-page').forEach(sp => sp.classList.remove('active-sub'));
-    // Tampilkan sub halaman terpilih
-    document.getElementById(subId).classList.add('active-sub');
-
-    // Atur kelas aktif pada tombol tab
-    const tabs = document.querySelectorAll('.tab-item');
-    tabs.forEach(tab => {
-        tab.classList.remove('active-tab');
-        if (subId.includes(tab.innerText.toLowerCase())) {
-            tab.classList.add('active-tab');
-        }
-    });
-}
-
-// --- MEMBUKA PROFIL DINAMIS ---
-function openProfile(nama, usia, jk, area, ratingVal) {
-    // Isi data ke elemen profil
-    document.getElementById('p-nama-top').innerText = nama.toUpperCase();
-    document.getElementById('p-nama').innerText = nama;
-    document.getElementById('p-usia').innerText = usia + " Tahun";
-    document.getElementById('p-jk').innerText = jk;
-    document.getElementById('p-area').innerText = area;
-    
-    let starStr = "";
-    for(let i=0; i<ratingVal; i++) { starStr += "★"; }
-    for(let i=ratingVal; i<5; i++) { starStr += "☆"; }
-    document.getElementById('p-rating').innerText = starStr;
-
-    // Ganti foto profil berdasarkan nama secara acak/statis terarah
-    const imgEl = document.getElementById('p-img');
-    if (nama.includes("Rizky")) imgEl.src = "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80";
-    else if (nama.includes("Siska")) imgEl.src = "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80";
-    else imgEl.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80";
-
-    // Arahkan ke halaman utama profil terlebih dahulu
-    showPage('profile');
-    switchProfileSubPage('profile-main');
-}
-
-// --- VALIDASI RATING BINTANG ---
+// --- STAR RATING INPUT LOGIC ---
 function initStarRating() {
     const stars = document.querySelectorAll('.star-rating-input i');
     const status = document.getElementById('ratingStatus');
@@ -72,6 +31,8 @@ function initStarRating() {
     stars.forEach(star => {
         star.addEventListener('click', () => {
             currentRating = star.getAttribute('data-value');
+            
+            // Nyalakan bintang sampai indeks yang diklik
             stars.forEach(s => {
                 s.classList.remove('active');
                 if (s.getAttribute('data-value') <= currentRating) {
@@ -91,7 +52,7 @@ function validateGmail() {
     
     if (gmailPattern.test(email) && pass.length >= 4) {
         isLogged = true;
-        userEmail = email.split('@')[0];
+        userEmail = email.split('@')[0]; // Ambil nama depan email
         alert(`Halo ${userEmail}, Selamat Datang di SurveyIN!`);
         
         document.getElementById('navLoginBtn').innerText = "LOGOUT";
@@ -110,7 +71,7 @@ function logout() {
     showPage('home');
 }
 
-// --- ULASAN AKSI ---
+// --- REVIEW LOGIC ---
 function checkReviewAccess() {
     if (isLogged) {
         const form = document.getElementById('reviewForm');
@@ -130,38 +91,63 @@ function submitReview() {
     }
 
     if (text.trim() !== "") {
-        const list = document.getElementById('reviewList');
-        const box = document.createElement('div');
-        box.className = 'review-box-custom';
-        
-        let starsStr = "";
-        for (let i = 1; i <= 5; i++) {
-            starsStr += i <= currentRating ? '★' : '☆';
-        }
+        const newReview = {
+            id: Date.now(),
+            name: userEmail,
+            date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+            content: text,
+            rating: currentRating
+        };
 
-        box.innerHTML = `
-            <div class="rev-header">
-                <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
-                <div>
-                    <h4>${userEmail}</h4>
-                    <small>Baru saja</small>
-                </div>
-            </div>
-            <div class="stars mb-1">${starsStr}</div>
-            <p>${text}</p>
-        `;
+        // Simpan ke LocalStorage
+        let reviews = JSON.parse(localStorage.getItem('surveyin_v3_data')) || [];
+        reviews.unshift(newReview);
+        localStorage.setItem('surveyin_v3_data', JSON.stringify(reviews));
+
+        renderReview(newReview, true);
         
-        list.prepend(box);
-        
-        // Reset Form
-        document.getElementById('revText').value = "";
-        currentRating = 0;
-        document.querySelectorAll('.star-rating-input i').forEach(s => s.classList.remove('active'));
-        document.getElementById('ratingStatus').innerText = "Pilih Rating";
-        document.getElementById('reviewForm').style.display = 'none';
-        
+        // Reset form ulasan
+        resetReviewForm();
         alert("Ulasan berhasil dikirim!");
     } else {
         alert("Tuliskan ulasanmu dulu ya.");
+    }
+}
+
+function resetReviewForm() {
+    document.getElementById('revText').value = "";
+    currentRating = 0;
+    document.querySelectorAll('.star-rating-input i').forEach(s => s.classList.remove('active'));
+    document.getElementById('ratingStatus').innerText = "Pilih Rating";
+    document.getElementById('reviewForm').style.display = 'none';
+}
+
+function renderReview(data, isNew = false) {
+    const list = document.getElementById('reviewList');
+    const box = document.createElement('div');
+    box.className = 'review-box';
+    
+    // Generate bintang berdasarkan rating
+    let stars = "";
+    for (let i = 1; i <= 5; i++) {
+        stars += `<i class="${i <= data.rating ? 'fas' : 'far'} fa-star"></i> `;
+    }
+
+    box.innerHTML = `
+        <p><strong><i class="fas fa-user-circle"></i> ${data.name}</strong> <small>— ${data.date}</small></p>
+        <p class="stars">${stars}</p>
+        <p>"${data.content}"</p>
+    `;
+    
+    isNew ? list.prepend(box) : list.appendChild(box);
+}
+
+function loadReviews() {
+    let saved = JSON.parse(localStorage.getItem('surveyin_v3_data')) || [];
+    if (saved.length === 0) {
+        // Data contoh jika belum ada ulasan sama sekali
+        renderReview({ name: "Andi Wijaya", date: "17 April 2026", content: "Layanannya oke bangeet, surveyor jujur dan detail!", rating: 5 });
+    } else {
+        saved.forEach(r => renderReview(r));
     }
 }
