@@ -1,0 +1,36 @@
+<section id="profile" class="page">
+    <div class="profile-header">
+        <div class="profile-pic">
+            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80" alt="Profile">
+        </div>
+        <div class="profile-info">
+            <h1>Rizky Pratama <i class="fas fa-check-circle verified"></i></h1>
+            <p><i class="fas fa-user"></i> 24 Tahun | Laki-laki</p>
+            <p><i class="fas fa-route"></i> Jangkauan: Jakarta & sekitarnya</p>
+            <p class="stars"><i class="fas fa-star"></i> 5.0 <span style="color:#666; font-size:14px;">(Surveyor Pilihan)</span></p><br>
+            <button class="btn-pink"><i class="fab fa-whatsapp"></i> Hubungi Surveyor</button>
+        </div>
+    </div>
+
+    <div class="section-title">
+        <h3><i class="fas fa-comments"></i> ULASAN PENGGUNA</h3>
+        <button class="btn-plus" onclick="checkReviewAccess()"><i class="fas fa-plus"></i></button>
+    </div>
+
+    <div id="reviewForm" class="review-input-box" style="display:none;">
+        <h4>Beri Rating & Pengalaman</h4>
+        <div class="star-rating-input">
+            <i class="fas fa-star" data-value="1"></i>
+            <i class="fas fa-star" data-value="2"></i>
+            <i class="fas fa-star" data-value="3"></i>
+            <i class="fas fa-star" data-value="4"></i>
+            <i class="fas fa-star" data-value="5"></i>
+            <span id="ratingStatus">Pilih Rating</span>
+        </div>
+        <textarea id="revText" rows="3" placeholder="Ceritakan pengalamanmu..."></textarea>
+        <button class="btn-pink" onclick="submitReview()">Kirim Ulasan</button>
+    </div>
+
+    <div id="reviewList">
+        </div>
+</section>
