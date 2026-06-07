@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SurveyIN - Jasa Survei Kos Tanpa Ribet</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<nav>
+    <div class="logo" onclick="showPage('home')">Survey<span>IN</span></div>
+    <ul id="navLinks">
+        <li class="nav-item active-nav" onclick="showPage('home')">HOME</li>
+        <li class="nav-item" onclick="showPage('about')">ABOUT</li>
+        <li class="nav-item" onclick="showPage('search')">SURVEYOR</li>
+        <li id="navBecomeSurveyor" class="nav-item" style="display:none;" onclick="showBecomeSurveyorForm()">JADI SURVEYOR</li>
+        <li id="navUploadKost" class="nav-item" style="display:none;" onclick="showUploadKostForm()">UPLOAD KOST</li>
+    </ul>
+    <div class="nav-auth">
+        <button id="navLoginBtn" class="btn-outline" onclick="showPage('login')">LOGIN</button>
+    </div>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="page active">
+    <div class="hero">
+        <div class="hero-text">
+            <p class="brand-sub">#1 Trusted Survey Service</p>
+            <h1>Mau cek kos tanpa ribet? <br><span class="text-pink">SurveyIN</span> aja!</h1>
+            <p>Ayo kunjungi laman ini! Hemat waktu dan tenaga. Biar surveyor profesional kami yang memastikan calon hunianmu aman dan nyaman sebelum kamu membayar.</p><br>
+            <button class="btn-pink" onclick="showPage('login')">START HERE! <i class="fas fa-arrow-right"></i></button>
+        </div>
+        <div class="hero-image">
+            <div class="logo-circle">
+                <span class="logo-circle-text">survey<span>IN</span></span>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-banner">
+        <h2>GAMBAR</h2>
+    </div>
+</section>
+
+<!-- LOGIN -->
+<section id="login" class="page">
+    <div class="login-card">
+        <span class="back-btn" onclick="showPage('home')"><i class="fas fa-chevron-left"></i> BACK</span>
+        <h2>LOGIN</h2>
+        <div class="input-group">
+            <i class="fas fa-user icon-input"></i>
+            <input type="text" id="usernameInput" placeholder="USERNAME">
+        </div>
+        <div class="input-group">
+            <i id="togglePasswordIcon" class="fas fa-eye-slash icon-input" style="cursor:pointer;"></i>
+            <input type="password" id="passInput" placeholder="PASSWORD">
+        </div>
+        <button class="btn-blue-submit full-width" onclick="login()">LOGIN</button>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="page">
+    <div class="container text-center">
+        <h2 class="title-blue">WHAT IS SurveyIN ?</h2>
+        <div class="about-vertical-stack">
+            <div class="card-about-custom">
+                <h3>DESKRIPSI</h3>
+                <p>Website yang mempertemukan pencari kos dengan penyedia layanan jasa survei kos.</p>
+            </div>
+            <div class="card-about-custom">
+                <h3>TUJUAN</h3>
+                <p>Menyediakan website yang menjadi tempat bagi penyedia jasa survei untuk menawarkan jasa kepada pengguna secara mudah</p>
+            </div>
+            <div class="card-about-custom">
+                <h3>MANFAAT</h3>
+                <p>memudahkan pencari kos untuk survei kos tanpa harus datang langsung ke lokasi</p>
+            </div>
+        </div>
+    </div>
+    <div class="wave-footer">
+        <div class="logo-footer">Survey<span>IN</span></div>
+    </div>
+</section>
+
+<!-- DAFTAR SURVEYOR -->
+<section id="search" class="page">
+    <div class="container">
+        <h2 class="title-blue mb-4">CARI SURVEYOR</h2>
+        <div id="surveyorListContainer" class="surveyor-list-stack"></div>
+    </div>
+</section>
+
+<!-- PROFIL SURVEYOR (DINAMIS) -->
+<section id="profile" class="page">
+    <div class="tabs-profile">
+        <div class="tab-item active-tab" onclick="switchProfileSubPage('profile-main')">PROFILE</div>
+        <div class="tab-item" onclick="switchProfileSubPage('profile-portofolio')">PORTOFOLIO</div>
+        <div class="tab-item" onclick="switchProfileSubPage('profile-ulasan')">ULASAN</div>
+    </div>
+
+    <div id="profile-main" class="profile-sub-page active-sub">
+        <div class="profile-center-card">
+            <div class="big-avatar-box"><img id="p-img" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&q=80" alt="Profile"></div>
+            <h2 id="p-nama-top" class="text-blue-heavy mt-2">NAMA</h2>
+        </div>
+        <hr class="divider-line">
+        <div class="profile-details-list">
+            <h2 class="title-details text-center">PROFILE</h2>
+            <div class="info-item">NAMA: <span id="p-nama">-</span></div>
+            <div class="info-item">USIA: <span id="p-usia">-</span></div>
+            <div class="info-item">JENIS KELAMIN: <span id="p-jk">-</span></div>
+            <div class="info-item">JANGKAUAN AREA KOS: <span id="p-area">-</span></div>
+            <div class="info-item">RATING: <span id="p-rating" class="stars">★★★★★</span></div>
+            <button id="editProfileBtn" class="btn-pink" style="margin: 20px auto; display: none;" onclick="editProfile()">EDIT PROFILE</button>
+        </div>
+        <button id="contactSurveyorBtn" class="contact-floating-btn" onclick="contactSurveyor()"><i class="far fa-comment-dots"></i> Contact me</button>
+    </div>
+
+    <div id="profile-portofolio" class="profile-sub-page">
+        <div class="container"><h2 class="title-blue mb-4">PORTOFOLIO KOST</h2><div id="portfolioGridContainer" class="portfolio-grid"></div></div>
+    </div>
+
+    <div id="profile-ulasan" class="profile-sub-page">
+        <div class="container">
+            <h2 class="title-blue mb-4">ULASAN SURVEYOR</h2>
+            <div id="reviewFormContainer" class="review-input-box" style="display:none;">
+                <h4>Tulis Ulasan Surveyor</h4>
+                <div class="star-rating-input" id="surveyorStarRating">
+                    <i class="fas fa-star" data-value="1"></i><i class="fas fa-star" data-value="2"></i>
+                    <i class="fas fa-star" data-value="3"></i><i class="fas fa-star" data-value="4"></i>
+                    <i class="fas fa-star" data-value="5"></i>
+                    <span id="ratingStatusSurveyor">Pilih Rating</span>
+                </div>
+                <textarea id="revTextSurveyor" rows="3" placeholder="Ceritakan pengalamanmu..."></textarea>
+                <button class="btn-pink-sm" onclick="submitReviewSurveyor()">Kirim Ulasan</button>
+            </div>
+            <div id="reviewListSurveyor"></div>
+            <hr class="divider-line" style="margin: 30px 0;">
+            <h2 class="title-blue mb-4">ULASAN KOST</h2>
+            <div id="kostReviewArea"></div>
+        </div>
+    </div>
+    <div class="wave-footer"><div class="logo-footer">Survey<span>IN</span></div></div>
+</section>
+
+<!-- MODAL JADI SURVEYOR -->
+<div id="becomeSurveyorModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('becomeSurveyorModal')">&times;</span>
+        <h2>Daftar Menjadi Surveyor</h2>
+        <input type="text" id="surveyorNama" placeholder="Nama Lengkap">
+        <input type="number" id="surveyorUsia" placeholder="Usia">
+        <select id="surveyorJk"><option value="Laki-laki">Laki-laki</option><option value="Perempuan">Perempuan</option></select>
+        <input type="text" id="surveyorArea" placeholder="Jangkauan Area (contoh: Jakarta Selatan)">
+        <input type="text" id="surveyorWhatsapp" placeholder="Nomor WhatsApp (contoh: 628123456789)">
+        <button class="btn-blue-submit" onclick="registerAsSurveyor()">Daftar Surveyor</button>
+    </div>
+</div>
+
+<!-- MODAL UPLOAD KOST -->
+<div id="uploadKostModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('uploadKostModal')">&times;</span>
+        <h2>Upload Kost Baru</h2>
+        <input type="text" id="kostNama" placeholder="Nama Kost">
+        <input type="text" id="kostAlamat" placeholder="Alamat Kost">
+        <label>Foto Kost (maksimal 5 foto, masing-masing maks 2MB):</label>
+        <input type="file" id="kostFoto" multiple accept="image/*">
+        <button class="btn-blue-submit" onclick="uploadKost()">Upload Kost</button>
+    </div>
+</div>
+
+<!-- MODAL EDIT PROFILE -->
+<div id="editProfileModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('editProfileModal')">&times;</span>
+        <h2>Edit Profile Surveyor</h2>
+        <input type="text" id="editNama" placeholder="Nama Lengkap">
+        <input type="number" id="editUsia" placeholder="Usia">
+        <select id="editJk">
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+        <input type="text" id="editArea" placeholder="Jangkauan Area">
+        <input type="text" id="editWhatsapp" placeholder="Nomor WhatsApp">
+        <label>Foto Profile (opsional, maks 2MB):</label>
+        <input type="file" id="editFoto" accept="image/*">
+        <button class="btn-blue-submit" onclick="updateProfile()">Simpan Perubahan</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
